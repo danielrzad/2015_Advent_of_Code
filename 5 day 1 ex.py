@@ -3,7 +3,7 @@ with open("5 day input.txt") as data_doc:
 
 def first_condition_check(string):
 	counter = 0
-	vowels = "aeiou"
+	vowels = set("aeiou")
 	for s in line:
 		if s in vowels:
 			counter += 1
@@ -11,33 +11,22 @@ def first_condition_check(string):
 		return True
 
 def second_condition_check(string):
-	counter = 0
 	for i in range(len(string) - 1):
 		if string[i] == string[i+1]:
-			counter += 1
-	if counter >= 1:
-		return True
+			return True
 
 def third_condition_check(string):
 	counter = 0
 	bad_strings = ["ab", "cd", "pq", "xy"]
 	for s in bad_strings:
 		if s in string:
-			counter += 1
-	if counter == 0:
-		return True
+			return False
+	return True
 
 nice_strings_counter = 0
 
 for line in data:
-	conditions_check = 0
-	if first_condition_check(line):
-		conditions_check += 1
-	if second_condition_check(line):
-		conditions_check += 1
-	if third_condition_check(line):
-		conditions_check += 1
-	if conditions_check == 3:
+	if first_condition_check(line) and second_condition_check(line) and third_condition_check(line):
 		nice_strings_counter += 1
 
 print(nice_strings_counter)
