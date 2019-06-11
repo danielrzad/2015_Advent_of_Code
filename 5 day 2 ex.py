@@ -3,23 +3,14 @@ with open("5 day input.txt") as data_doc:
 
 
 def first_condition_check(string):
-	first_req = 0
-	second_req = 0
 	for i in range(len(string) - 2):
 		if string[i:i+2] in string[i+2:]:
-			first_req += 1
-		if string[i] != string[i+2]:
-			second_req += 1
-		if first_req > 0 and second_req > 0:
 			return True
 
 def second_condition_check(string):
-	counter = 0
 	for i in range(len(string) - 2):
 		if string[i] == string[i+2]:
-			counter += 1
-	if counter > 0:
-		return True
+			return True
 
 nice_string_counter = 0
 
