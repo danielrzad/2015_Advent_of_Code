@@ -1,3 +1,4 @@
+
 with open("7_day_input.txt") as data_doc:
 	data = data_doc.read().splitlines()
 
