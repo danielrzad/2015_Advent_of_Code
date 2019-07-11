@@ -1,24 +1,13 @@
-with open("8_day_input.txt") as data_doc:
-	data = data_doc.read().splitlines()
+import re
 
-code_lenght = 0
-string_lenght = 0
+def next_password(password):
+    while True:
+        password = re.sub(r'([a-y])(z*)$', lambda x: chr(ord(x.group(1))+1) + len(x.group(2))*"a", password)
+        if ("i" in password or "o" in password or "l" in password) or \
+           (len(re.findall(r'([a-z])\1', password)) < 2) or \
+           (len([1 for x, y, z in zip(password, password[1:], password[2:])
+                   if ord(z)-ord(y) == 1 and ord(y)-ord(x) == 1]) == 0): continue
 
-for i in range(len(data)):
-	code_lenght += len(data[i])
-	for j in range(len(data[i])):
-		if data[i][j:j+2] == '\\\\':
-			data[i] = data[i][:j] + data[i][j+1:]
-		if data[i][j:j+2] == '\\"':
-			data[i] = data[i][:j] + data[i][j+1:]
-		if data[i][j:j+2] == '\\x':
-			try:
-				if bytearray.fromhex(data[i][j+2:j+4]).decode().isprintable() == True:
-					data[i] = data[i][:j] + bytearray.fromhex(data[i][j+2:j+4]).decode() + data[i][j+4:]
-			except (UnicodeDecodeError, ValueError):
-				continue
-	string_lenght += len(data[i][1:-1])
+        return password
 
-print(code_lenght)
-print(string_lenght)
-print(code_lenght - string_lenght)
+print(next_password("cqjxjnds"))
