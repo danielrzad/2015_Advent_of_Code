@@ -38,12 +38,17 @@ while all([len(i) == (len(persons) + 1) for i in connections]) != True:
 			connections.extend(find_next(connection))
 			connections.remove(connection)
 		if len(connection) == 9:
+			#dorobic liczenie od tylu
+			for count, item in reversed(list(enumerate(connection))):
 			for rel in relations:
+				#do znajdywania powiazan pomiedzy ostatnim a pierwszym i pierwszym a ostatnim
 				if connection[1] == rel[2] and connection[-1] == rel[1]:
 					connection[0] += rel[0]
-					final_lst.append(connection)
-					connections.remove(connection)
-					break
+				if connection[1] == rel[1] and connection[-1] == rel[2]:
+					connection[0] += rel[0]
+			final_lst.append(connection)
+			connections.remove(connection)
+			break
 
 highest_happines = final_lst[0][0]
 print(final_lst)
