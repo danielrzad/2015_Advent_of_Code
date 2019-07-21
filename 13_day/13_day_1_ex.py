@@ -16,8 +16,8 @@ for line in data:
 	persons_lst.append(line[10])
 	relations.append(persons_lst)
 
-connections = relations[:]
 
+connections = relations[:]
 
 def find_next(lst):
 	relationships = []
@@ -31,6 +31,8 @@ def find_next(lst):
 	return relationships
 
 final_lst = []
+highest_happines = 0
+
 
 while all([len(i) == (len(persons) + 1) for i in connections]) != True:
 	for connection in connections:
@@ -38,26 +40,18 @@ while all([len(i) == (len(persons) + 1) for i in connections]) != True:
 			connections.extend(find_next(connection))
 			connections.remove(connection)
 		if len(connection) == 9:
-			#dorobic liczenie od tylu
-			for count, item in reversed(list(enumerate(connection))):
+			for c, i in reversed(list(enumerate(connection[2:], 2))):
+				for r in relations:
+					if connection[c] == r[1] and connection[c-1] == r[2]:
+						connection[0] += r[0]
 			for rel in relations:
-				#do znajdywania powiazan pomiedzy ostatnim a pierwszym i pierwszym a ostatnim
 				if connection[1] == rel[2] and connection[-1] == rel[1]:
 					connection[0] += rel[0]
 				if connection[1] == rel[1] and connection[-1] == rel[2]:
 					connection[0] += rel[0]
-			final_lst.append(connection)
+			if connection[0] >= highest_happines:
+				highest_happines = connection[0]
 			connections.remove(connection)
 			break
 
-highest_happines = final_lst[0][0]
-print(final_lst)
-for lst in final_lst:
-	if lst[0] > highest_happines:
-		highest_happines = lst[0]
-
-
-
-
-for count, item in reversed(enumerate(final_lst)):
-	print("chuj")
+print(highest_happines)
