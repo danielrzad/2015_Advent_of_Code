@@ -6,22 +6,16 @@ race_lenght = 2503
 
 for lst in initial_data:
 	data.extend([[lst[0], int(lst[3]), int(lst[6]), int(lst[13])]])
-
+print(data)
 def speedometer(speed, speed_time, rest_time, race_duration):
 	distance = 0
 	full_cycles = race_duration // (speed_time + rest_time)
 	race_duration -= full_cycles * (speed_time + rest_time)
 	distance += speed * speed_time * full_cycles
-	working_lst = [1] * speed_time
-	for i in working_lst:
+	for i in range(speed_time):
 		if race_duration >= 1:
 			distance += speed
 			race_duration -= 1
 	return distance
 
-dist = 0
-for l in data:
-	if speedometer(l[1], l[2], l[3], race_lenght) >= dist:
-		dist = speedometer(l[1], l[2], l[3], race_lenght)
-
-print(dist)
+print(max(map(lambda x: speedometer(*x[1:4], race_lenght), data)))

@@ -1,4 +1,3 @@
-speed_time = 7
-k = [speed_time // speed_time] * speed_time
-
-print(k, len(k))
+sec_winner = []
+sec_winner.extend(['Vixen', 45])
+print(sec_winner)
