@@ -13,6 +13,8 @@ for i in data:
 			minor_keys.append(v[:3])
 		else:
 			values.append(int(v))
+	minor_keys.append('q')
+	values.append(0)
 	d[main_key] = dict(zip(minor_keys, values))
 
 pprint(d)
@@ -33,13 +35,16 @@ for a in range(0, 101):
                     break
 
 def multiplication(lst):
-	w = lst[0] * d['Sp']['cap'] + lst[1] * d['Bu']['cap'] + lst[2] * d['Ch']['cap'] + lst[3] * d['Ca']['cap']
-	x = lst[0] * d['Sp']['dur'] + lst[1] * d['Bu']['dur'] + lst[2] * d['Ch']['dur'] + lst[3] * d['Ca']['dur']
-	y = lst[0] * d['Sp']['fla'] + lst[1] * d['Bu']['fla'] + lst[2] * d['Ch']['fla'] + lst[3] * d['Ca']['fla']
-	z = lst[0] * d['Sp']['tex'] + lst[1] * d['Bu']['tex'] + lst[2] * d['Ch']['tex'] + lst[3] * d['Ca']['tex']
-	if any(i < 0 for i in [w, x, y, z]):
+	v = lst[0] * d['Sp']['cap'] + lst[1] * d['Bu']['cap'] + lst[2] * d['Ch']['cap'] + lst[3] * d['Ca']['cap']
+	w = lst[0] * d['Sp']['dur'] + lst[1] * d['Bu']['dur'] + lst[2] * d['Ch']['dur'] + lst[3] * d['Ca']['dur']
+	x = lst[0] * d['Sp']['fla'] + lst[1] * d['Bu']['fla'] + lst[2] * d['Ch']['fla'] + lst[3] * d['Ca']['fla']
+	y = lst[0] * d['Sp']['tex'] + lst[1] * d['Bu']['tex'] + lst[2] * d['Ch']['tex'] + lst[3] * d['Ca']['tex']
+	z = lst[0] * d['Sp']['cal'] + lst[1] * d['Bu']['cal'] + lst[2] * d['Ch']['cal'] + lst[3] * d['Ca']['cal']
+	if z != 500:
+		return False
+	if any(i < 0 for i in [v, w, x, y]):
 		return False
 	else:
-		return w * x * y * z
+		return v * w * x * y
 
 print(max(map(multiplication, combinations)))

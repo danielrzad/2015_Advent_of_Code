@@ -1,44 +1,48 @@
-with open("14_day_input.txt") as data_doc:
-	initial_data = map(str.split, data_doc.read().splitlines())
+from pprint import pprint
+with open('15_day_input.txt') as data_doc:
+	data = list(map(str.split, data_doc.read().replace(':', '').replace(',', '').splitlines()))
 
-race_lenght = 2503
-reindeers = {}
+d = {}
 
-for lst in initial_data:
-	reindeers[lst[0]] = {'speed': int(lst[3]), 'speed_time': int(lst[6]),
-						 'speed_time_left': int(lst[6]), 'rest_time': int(lst[13]), 
-						 'actual_rest_time': int(lst[13]), 'distance': 0,
-						 'points': 0}
+for i in data:
+	main_key = i[0][:2]
+	minor_keys = []
+	values = []
+	for c, v  in enumerate(i[1:]):
+		if c % 2 == 0:
+			minor_keys.append(v[:3])
+		else:
+			values.append(int(v))
+	d[main_key] = dict(zip(minor_keys, values))
 
-def distance_per_sec(reindeeer_dic):
-	if reindeeer_dic['speed_time_left'] >= 1:
-		reindeeer_dic['speed_time_left'] -= 1
-		reindeeer_dic['distance'] += reindeeer_dic['speed']
-	elif reindeeer_dic['speed_time_left'] == 0:
-		reindeeer_dic['actual_rest_time'] -= 1
-		if reindeeer_dic['actual_rest_time'] == 0:
-			reindeeer_dic['actual_rest_time'] = reindeeer_dic['rest_time']
-			reindeeer_dic['speed_time_left'] = reindeeer_dic['speed_time'] 
+pprint(d)
 
-def points_per_sec():
-	sec_winner = [0, 'place_holder']
-	for key in reindeers.keys():
-		if reindeers[key]['distance'] > sec_winner[0]:
-			sec_winner = [reindeers[key]['distance'], key]
-		elif reindeers[key]['distance'] == sec_winner[0]:
-			sec_winner.append(key)
-	for k in sec_winner[1:]:
-		reindeers[k]['points'] += 1
+combinations = []
 
-for i in range(race_lenght):
-	for key in reindeers.keys():
-		distance_per_sec(reindeers[key])
-	points_per_sec()
+for a in range(0, 101):
+    for b in range(0, 101):
+        if a + b > 100:
+            break
+        for c in range(0, 101):
+            if a + b + c > 100:
+                break
+            for e in range(0, 101):
+                if a + b + c + e == 100:
+                    combinations.append([a, b, c, e])
+                elif a + b + c + e > 100:
+                    break
 
-max_pointes = 0
+def multiplication(lst):
+	v = lst[0] * d['Sp']['cap'] + lst[1] * d['Bu']['cap'] + lst[2] * d['Ch']['cap'] + lst[3] * d['Ca']['cap']
+	w = lst[0] * d['Sp']['dur'] + lst[1] * d['Bu']['dur'] + lst[2] * d['Ch']['dur'] + lst[3] * d['Ca']['dur']
+	x = lst[0] * d['Sp']['fla'] + lst[1] * d['Bu']['fla'] + lst[2] * d['Ch']['fla'] + lst[3] * d['Ca']['fla']
+	y = lst[0] * d['Sp']['tex'] + lst[1] * d['Bu']['tex'] + lst[2] * d['Ch']['tex'] + lst[3] * d['Ca']['tex']
+	z = lst[0] * d['Sp']['cal'] + lst[1] * d['Bu']['cal'] + lst[2] * d['Ch']['cal'] + lst[3] * d['Ca']['cal']
+	if z != 500:
+		return False
+	if any(i < 0 for i in [v, w, x, y]):
+		return False
+	else:
+		return v * w * x * y
 
-for key in reindeers.keys():
-	if reindeers[key]['points'] >= max_pointes:
-		max_pointes = reindeers[key]['points']
-
-print(max_pointes)
+print(max(map(multiplication, combinations)))

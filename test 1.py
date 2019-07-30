@@ -1,7 +1,6 @@
-from itertools import product
+k = {'gol': 9, 'pom': 0}
+b = {'gol': 9, 'chu': 9, 'pom': 0, }
 
-a = list(range(101))
-
-print (list(product(a, repeat=100)))
-
-
+if k.items() <= b.items():
+	print(k.items(), b.items())
+	print('dziala')
