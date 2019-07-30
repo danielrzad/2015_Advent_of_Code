@@ -1,3 +1,7 @@
-sec_winner = []
-sec_winner.extend(['Vixen', 45])
-print(sec_winner)
+from itertools import product
+
+a = list(range(101))
+
+print (list(product(a, repeat=100)))
+
+
