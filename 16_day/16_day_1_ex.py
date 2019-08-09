@@ -15,15 +15,9 @@ for i in data:
 			minor_keys.append(v[:3])
 		else:
 			values.append(int(v))
-	for c, v in enumerate(values):
-		if v == 0:
-			del values[c]
-			del minor_keys[c]
 	d[main_key] = dict(zip(minor_keys, values))
-	d[main_key] = dict(zip(minor_keys, values))
-
-pprint(d)
 
 for key, val in d.items():
 	if val.items() <= s.items():
-		print(key, val)
+		print(key)
+		break
