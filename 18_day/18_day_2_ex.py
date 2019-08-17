@@ -1,6 +1,11 @@
 with open('18_day_input.txt') as data_doc:
 	data = data_doc.read().splitlines()
 
+# check_on_neighbors i check_off_neighbors zrobic  ztego jedno
+# first_last_row(), row() powinno brac argumenty 
+# if x in [0, -1] or y in [0, -1]: rozdzielic na dwa ify pod x i pod y
+# elif grid[x] == grid[-1]: bład najwaznijszy 
+
 def check_on_neighbors(x, y, grid, z):
 	on_cont = -1
 	off_cont = 0
@@ -60,31 +65,17 @@ data[0] = '#' + data[0][1:-1] + '#'
 # print(data[0])
 data[-1] = '#' + data[-1][1:-1] + '#'
 
-def first_last_row():
-	#zrobic iterator do 1 i ostatniego rzedu 
-	for co, va in enumerate(v):
-			if va == '#':
-				if check_on_neighbors(c, co, data, va):
-					new_row.append('#')
-				else:
-					new_row.append('.')
-			if va == '.':
-				if check_off_neighbors(c, co, data, va):
-					new_row.append('#')
-				else:
-					new_row.append('.')
-
 for r in data:
 	print(r)
-
 print()
 
-for i in range(4):
-	new_data = []
-	for c, v in enumerate(data):
-		print(data[c])
-		new_row = []
-		for co, va in enumerate(v):
+
+def first_last_row():
+	new_row = []
+	for co, va in enumerate(v):
+		if co in [0, len(v) - 1]:
+			new_row.append('#')
+		else:
 			if va == '#':
 				if check_on_neighbors(c, co, data, va):
 					new_row.append('#')
@@ -95,8 +86,33 @@ for i in range(4):
 					new_row.append('#')
 				else:
 					new_row.append('.')
-		new_data.append(new_row)
+	return new_row
+
+def row():
+	new_row = []
+	for co, va in enumerate(v):
+		if va == '#':
+			if check_on_neighbors(c, co, data, va):
+				new_row.append('#')
+			else:
+				new_row.append('.')
+		if va == '.':
+			if check_off_neighbors(c, co, data, va):
+				new_row.append('#')
+			else:
+				new_row.append('.')
+	return new_row
+
+
+for i in range(5):
+	new_data = []
+	for c, v in enumerate(data):
+		if c in [0, len(data) - 1]:
+			new_data.append(first_last_row())
+		else:
+			new_data.append(row())
 	data = new_data
+	print(i+1, 'step')
 	for r in data:
 		print(r)
 	print()
