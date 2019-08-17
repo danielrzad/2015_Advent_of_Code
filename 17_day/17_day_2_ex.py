@@ -9,8 +9,12 @@ for i in range(1,len(cont)):
 		if sum(s) == 150:
 			results.append(s)
 
-print(min(results, key=len))
+#print(min(results, key=len))
 
 #print(len(min(results, key=len)))
 
-#print(min(map(len, results)))
+z = min(map(len, results))
+
+y = len(list(filter(lambda x: len(x) == z, results)))
+
+print(y)
